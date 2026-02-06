@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Starboard News - 订阅精选资讯',
-  description: '订阅能源、加密货币、数据中心领域的精选日报，直达邮箱',
-  keywords: ['newsletter', '订阅', '能源', 'crypto', '数据中心', '比特币'],
+  title: 'Starboard News - Curated Insights',
+  description: 'Subscribe to curated daily newsletters on energy, crypto, and data centers',
+  keywords: ['newsletter', 'subscription', 'energy', 'crypto', 'data centers', 'bitcoin mining'],
   authors: [{ name: 'Starboard' }],
   openGraph: {
-    title: 'Starboard News - 订阅精选资讯',
-    description: '订阅能源、加密货币、数据中心领域的精选日报，直达邮箱',
+    title: 'Starboard News - Curated Insights',
+    description: 'Subscribe to curated daily newsletters on energy, crypto, and data centers',
     url: 'https://news.starboard.to',
     siteName: 'Starboard News',
     images: [
@@ -18,13 +18,13 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
-    locale: 'zh_CN',
+    locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Starboard News - 订阅精选资讯',
-    description: '订阅能源、加密货币、数据中心领域的精选日报，直达邮箱',
+    title: 'Starboard News - Curated Insights',
+    description: 'Subscribe to curated daily newsletters on energy, crypto, and data centers',
     images: ['/images/og-image.png'],
   },
   icons: {
@@ -44,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="zh">
+    <html lang="en">
       <body className="min-h-screen bg-black">
         {children}
       </body>

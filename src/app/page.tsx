@@ -7,20 +7,29 @@ const FEEDS = [
   {
     id: 'minor_news',
     name: 'Minor News',
-    description: '能源、数据中心、比特币矿场每日新闻',
-    schedule: '每天 08:30 GMT',
+    description: 'Daily energy, data center & bitcoin mining news',
+    schedule: 'Daily at 08:30 GMT',
     emoji: '⚡',
-    tags: ['能源', '数据中心', '矿场'],
+    tags: ['Energy', 'Data Centers', 'Mining'],
     color: 'amber',
   },
   {
     id: 'into_crypto_cn',
-    name: 'Into Crypto 中文版',
+    name: 'Into Crypto (CN)',
     description: '加密货币科普日报，零基础友好',
-    schedule: '每天 08:00 + 13:00 GMT',
+    schedule: 'Daily at 08:00 + 13:00 GMT',
     emoji: '🪙',
-    tags: ['Crypto', '教育', '中文'],
+    tags: ['Crypto', 'Education', '中文'],
     color: 'purple',
+  },
+  {
+    id: 'into_crypto_en',
+    name: 'Into Crypto (EN)',
+    description: 'Crypto education for beginners, zero jargon',
+    schedule: 'Daily at 08:00 + 13:00 GMT',
+    emoji: '🪙',
+    tags: ['Crypto', 'Education', 'English'],
+    color: 'blue',
   },
 ]
 
@@ -43,7 +52,7 @@ export default function Home() {
     
     if (!email || selectedFeeds.length === 0) {
       setStatus('error')
-      setMessage('请输入邮箱并至少选择一个订阅')
+      setMessage('Please enter your email and select at least one newsletter')
       return
     }
 
@@ -60,16 +69,45 @@ export default function Home() {
       
       if (res.ok) {
         setStatus('success')
-        setMessage('订阅成功！每日精选资讯将发送到您的邮箱。')
+        setMessage('Subscribed! You\'ll receive curated news in your inbox.')
         setEmail('')
         setSelectedFeeds([])
       } else {
         setStatus('error')
-        setMessage(data.error || '订阅失败，请重试')
+        setMessage(data.error || 'Subscription failed, please try again')
       }
     } catch (err) {
       setStatus('error')
-      setMessage('网络错误，请重试')
+      setMessage('Network error, please try again')
+    }
+  }
+
+  const getColorClasses = (color: string, isSelected: boolean) => {
+    if (!isSelected) return 'border-white/10 bg-[#000C24] hover:border-white/30'
+    switch (color) {
+      case 'amber': return 'border-amber-500 bg-amber-500/10'
+      case 'purple': return 'border-purple-500 bg-purple-500/10'
+      case 'blue': return 'border-blue-500 bg-blue-500/10'
+      default: return 'border-white/30 bg-white/5'
+    }
+  }
+
+  const getCheckboxClasses = (color: string, isSelected: boolean) => {
+    if (!isSelected) return 'border-white/30'
+    switch (color) {
+      case 'amber': return 'bg-amber-500 border-amber-500'
+      case 'purple': return 'bg-purple-500 border-purple-500'
+      case 'blue': return 'bg-blue-500 border-blue-500'
+      default: return 'bg-white border-white'
+    }
+  }
+
+  const getAccentColor = (color: string) => {
+    switch (color) {
+      case 'amber': return 'text-amber-500'
+      case 'purple': return 'text-purple-400'
+      case 'blue': return 'text-blue-400'
+      default: return 'text-white'
     }
   }
 
@@ -92,7 +130,7 @@ export default function Home() {
             News
           </h1>
           <p className="text-gray-400 text-lg">
-            订阅精选资讯，每日直达邮箱
+            Curated insights, delivered to your inbox
           </p>
         </div>
 
@@ -100,32 +138,20 @@ export default function Home() {
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Feed Selection */}
           <div className="space-y-4">
-            <h2 className="text-xl font-semibold text-white mb-4">选择订阅频道</h2>
+            <h2 className="text-xl font-semibold text-white mb-4">Select Newsletters</h2>
             
             {FEEDS.map(feed => (
               <div
                 key={feed.id}
                 onClick={() => toggleFeed(feed.id)}
-                className={`p-6 rounded-xl border cursor-pointer transition-all duration-200 ${
-                  selectedFeeds.includes(feed.id) 
-                    ? feed.color === 'amber' 
-                      ? 'border-amber-500 bg-amber-500/10' 
-                      : 'border-purple-500 bg-purple-500/10'
-                    : 'border-white/10 bg-[#000C24] hover:border-white/30'
-                }`}
+                className={`p-6 rounded-xl border cursor-pointer transition-all duration-200 ${getColorClasses(feed.color, selectedFeeds.includes(feed.id))}`}
               >
                 <div className="flex items-start gap-4">
                   <div className="text-3xl">{feed.emoji}</div>
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-lg font-semibold text-white">{feed.name}</h3>
-                      <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                        selectedFeeds.includes(feed.id)
-                          ? feed.color === 'amber'
-                            ? 'bg-amber-500 border-amber-500'
-                            : 'bg-purple-500 border-purple-500'
-                          : 'border-white/30'
-                      }`}>
+                      <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${getCheckboxClasses(feed.color, selectedFeeds.includes(feed.id))}`}>
                         {selectedFeeds.includes(feed.id) && (
                           <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -135,7 +161,7 @@ export default function Home() {
                     </div>
                     <p className="text-gray-400 text-sm mb-2">{feed.description}</p>
                     <div className="flex flex-wrap items-center gap-3 text-xs">
-                      <span className={feed.color === 'amber' ? 'text-amber-500' : 'text-purple-400'}>
+                      <span className={getAccentColor(feed.color)}>
                         🕐 {feed.schedule}
                       </span>
                       <div className="flex gap-2">
@@ -155,7 +181,7 @@ export default function Home() {
           {/* Email Input */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-              邮箱地址
+              Email Address
             </label>
             <input
               type="email"
@@ -174,7 +200,7 @@ export default function Home() {
             disabled={status === 'loading'}
             className="w-full py-3 px-6 rounded-lg bg-white text-black font-semibold hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {status === 'loading' ? '订阅中...' : '立即订阅'}
+            {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
           </button>
 
           {/* Status Message */}
@@ -195,7 +221,7 @@ export default function Home() {
               Starboard
             </a>
           </p>
-          <p className="mt-2">随时可以取消订阅 · 我们不会发送垃圾邮件</p>
+          <p className="mt-2">Unsubscribe anytime · No spam, ever</p>
         </div>
       </div>
     </main>
