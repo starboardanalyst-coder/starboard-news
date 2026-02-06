@@ -80,11 +80,11 @@ export default function Home() {
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
             <Image
-              src="/images/wordmark.svg"
+              src="/images/logo.svg"
               alt="Starboard"
-              width={200}
-              height={40}
-              className="h-10 w-auto invert"
+              width={280}
+              height={84}
+              className="h-20 w-auto"
               priority
             />
           </div>
