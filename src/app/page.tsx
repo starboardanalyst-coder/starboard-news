@@ -5,13 +5,13 @@ import Image from 'next/image'
 
 const FEEDS = [
   {
-    id: 'minor_news',
-    name: 'Minor News',
-    description: 'Daily energy, data center & bitcoin mining news',
-    schedule: 'Daily at 08:30 GMT',
-    emoji: '⚡',
-    tags: ['Energy', 'Data Centers', 'Mining'],
-    color: 'amber',
+    id: 'into_crypto_en',
+    name: 'Into Crypto (EN)',
+    description: 'Crypto education for beginners, zero jargon',
+    schedule: 'Daily at 08:00 + 13:00 GMT',
+    emoji: '🪙',
+    tags: ['Crypto', 'Education', 'English'],
+    color: 'blue',
   },
   {
     id: 'into_crypto_cn',
@@ -21,15 +21,6 @@ const FEEDS = [
     emoji: '🪙',
     tags: ['Crypto', 'Education', '中文'],
     color: 'purple',
-  },
-  {
-    id: 'into_crypto_en',
-    name: 'Into Crypto (EN)',
-    description: 'Crypto education for beginners, zero jargon',
-    schedule: 'Daily at 08:00 + 13:00 GMT',
-    emoji: '🪙',
-    tags: ['Crypto', 'Education', 'English'],
-    color: 'blue',
   },
 ]
 
