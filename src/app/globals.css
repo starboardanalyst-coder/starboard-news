@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --accent: #f59e0b;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.card {
+  @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6;
+}
+
+.btn-primary {
+  @apply bg-amber-500 hover:bg-amber-600 text-black font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105;
+}
+
+.input-field {
+  @apply w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500;
+}
+
+.checkbox-custom {
+  @apply w-5 h-5 rounded border-2 border-white/30 bg-transparent checked:bg-amber-500 checked:border-amber-500 focus:ring-amber-500 focus:ring-offset-0;
+}
