@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 50" fill="none">
+  <!-- Wordmark only (no icon) — for nav bars, email signatures -->
+  <text x="0" y="32" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="36" fill="white" letter-spacing="-0.5">Starboard</text>
+  <text x="1" y="48" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-weight="400" font-size="13" fill="#374151" letter-spacing="5">ANALYTICS</text>
+</svg>

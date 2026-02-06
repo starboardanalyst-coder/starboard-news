@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 
 const FEEDS = [
   {
@@ -10,6 +11,7 @@ const FEEDS = [
     schedule: '每天 08:30 GMT',
     emoji: '⚡',
     tags: ['能源', '数据中心', '矿场'],
+    color: 'amber',
   },
   {
     id: 'into_crypto_cn',
@@ -18,6 +20,7 @@ const FEEDS = [
     schedule: '每天 08:00 + 13:00 GMT',
     emoji: '🪙',
     tags: ['Crypto', '教育', '中文'],
+    color: 'purple',
   },
 ]
 
@@ -71,12 +74,22 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen py-12 px-4">
+    <main className="min-h-screen py-12 px-4 bg-black">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="text-amber-500">Starboard</span> News
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/images/wordmark.svg"
+              alt="Starboard"
+              width={200}
+              height={40}
+              className="h-10 w-auto invert"
+              priority
+            />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            News
           </h1>
           <p className="text-gray-400 text-lg">
             订阅精选资讯，每日直达邮箱
@@ -93,10 +106,12 @@ export default function Home() {
               <div
                 key={feed.id}
                 onClick={() => toggleFeed(feed.id)}
-                className={`card cursor-pointer transition-all duration-200 ${
+                className={`p-6 rounded-xl border cursor-pointer transition-all duration-200 ${
                   selectedFeeds.includes(feed.id) 
-                    ? 'border-amber-500 bg-amber-500/10' 
-                    : 'hover:border-white/30'
+                    ? feed.color === 'amber' 
+                      ? 'border-amber-500 bg-amber-500/10' 
+                      : 'border-purple-500 bg-purple-500/10'
+                    : 'border-white/10 bg-[#000C24] hover:border-white/30'
                 }`}
               >
                 <div className="flex items-start gap-4">
@@ -104,9 +119,11 @@ export default function Home() {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-lg font-semibold text-white">{feed.name}</h3>
-                      <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
+                      <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
                         selectedFeeds.includes(feed.id)
-                          ? 'bg-amber-500 border-amber-500'
+                          ? feed.color === 'amber'
+                            ? 'bg-amber-500 border-amber-500'
+                            : 'bg-purple-500 border-purple-500'
                           : 'border-white/30'
                       }`}>
                         {selectedFeeds.includes(feed.id) && (
@@ -117,11 +134,13 @@ export default function Home() {
                       </div>
                     </div>
                     <p className="text-gray-400 text-sm mb-2">{feed.description}</p>
-                    <div className="flex items-center gap-3 text-xs">
-                      <span className="text-amber-500">🕐 {feed.schedule}</span>
+                    <div className="flex flex-wrap items-center gap-3 text-xs">
+                      <span className={feed.color === 'amber' ? 'text-amber-500' : 'text-purple-400'}>
+                        🕐 {feed.schedule}
+                      </span>
                       <div className="flex gap-2">
                         {feed.tags.map(tag => (
-                          <span key={tag} className="bg-white/10 px-2 py-0.5 rounded">
+                          <span key={tag} className="bg-white/10 px-2 py-0.5 rounded text-gray-300">
                             {tag}
                           </span>
                         ))}
@@ -144,7 +163,7 @@ export default function Home() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
-              className="input-field"
+              className="w-full px-4 py-3 rounded-lg bg-[#000C24] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors"
               required
             />
           </div>
@@ -153,7 +172,7 @@ export default function Home() {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 px-6 rounded-lg bg-white text-black font-semibold hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {status === 'loading' ? '订阅中...' : '立即订阅'}
           </button>
@@ -169,8 +188,13 @@ export default function Home() {
         </form>
 
         {/* Footer */}
-        <div className="mt-12 text-center text-gray-500 text-sm">
-          <p>Powered by <a href="https://starboard.to" className="text-amber-500 hover:underline">Starboard</a></p>
+        <div className="mt-16 text-center text-gray-500 text-sm">
+          <p>
+            Powered by{' '}
+            <a href="https://starboard.to" className="text-white hover:underline">
+              Starboard
+            </a>
+          </p>
           <p className="mt-2">随时可以取消订阅 · 我们不会发送垃圾邮件</p>
         </div>
       </div>
