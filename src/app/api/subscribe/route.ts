@@ -7,7 +7,39 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_KEY!
 )
 
-const VALID_FEEDS = ['minor_news', 'into_crypto_cn', 'into_crypto_en']
+// Newsletter definitions
+const NEWSLETTERS = [
+  {
+    id: 'minor_news',
+    name: 'Minor News',
+    description: 'Daily crypto & energy infrastructure news digest',
+    emoji: '⚡',
+    language: 'en'
+  },
+  {
+    id: 'into_crypto_cn',
+    name: 'Into Crypto 中文版',
+    description: '每日加密货币深度分析',
+    emoji: '🪙',
+    language: 'zh'
+  },
+  {
+    id: 'into_crypto_en',
+    name: 'Into Crypto',
+    description: 'Daily crypto analysis and insights',
+    emoji: '🪙',
+    language: 'en'
+  }
+]
+
+const VALID_FEEDS = NEWSLETTERS.map(n => n.id)
+
+// CORS headers for cross-origin requests
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+}
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -146,21 +178,41 @@ async function sendNewsletter(email: string, feedType: string): Promise<void> {
   console.log(`✅ Sent ${feedType} to ${email}`)
 }
 
+// GET: Return available newsletters
+export async function GET() {
+  return NextResponse.json({
+    newsletters: NEWSLETTERS,
+    usage: {
+      endpoint: 'POST /api/subscribe',
+      body: {
+        email: 'user@example.com',
+        feeds: ['minor_news', 'into_crypto_cn']
+      }
+    }
+  }, { headers: corsHeaders })
+}
+
+// OPTIONS: Handle CORS preflight
+export async function OPTIONS() {
+  return new NextResponse(null, { status: 204, headers: corsHeaders })
+}
+
+// POST: Subscribe to newsletters
 export async function POST(request: NextRequest) {
   try {
     const { email, feeds } = await request.json()
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: 'Please enter a valid email address' }, { status: 400 })
+      return NextResponse.json({ error: 'Please enter a valid email address' }, { status: 400, headers: corsHeaders })
     }
 
     if (!feeds || !Array.isArray(feeds) || feeds.length === 0) {
-      return NextResponse.json({ error: 'Please select at least one newsletter' }, { status: 400 })
+      return NextResponse.json({ error: 'Please select at least one newsletter' }, { status: 400, headers: corsHeaders })
     }
 
     const validFeeds = feeds.filter((f: string) => VALID_FEEDS.includes(f))
     if (validFeeds.length === 0) {
-      return NextResponse.json({ error: 'Invalid newsletter selection' }, { status: 400 })
+      return NextResponse.json({ error: 'Invalid newsletter selection' }, { status: 400, headers: corsHeaders })
     }
 
     const emailLower = email.toLowerCase()
@@ -192,7 +244,7 @@ export async function POST(request: NextRequest) {
         success: true, 
         message: 'Subscription updated! Check your inbox.',
         feeds: mergedFeeds 
-      })
+      }, { headers: corsHeaders })
     }
 
     const { error: insertError } = await supabase
@@ -214,10 +266,10 @@ export async function POST(request: NextRequest) {
       success: true, 
       message: 'Subscribed! Check your inbox.',
       feeds: validFeeds 
-    })
+    }, { headers: corsHeaders })
 
   } catch (error) {
     console.error('Subscription error:', error)
-    return NextResponse.json({ error: 'Server error, please try again' }, { status: 500 })
+    return NextResponse.json({ error: 'Server error, please try again' }, { status: 500, headers: corsHeaders })
   }
 }
