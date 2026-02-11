@@ -30,14 +30,31 @@ export async function POST(request: NextRequest) {
 
     const content = await generateContent(type, date, sources)
 
-    const { error: insertError } = await supabase.from('reports').insert({
-      type,
-      content,
-      date,
-      source: 'claude',
-    })
+    // Upsert: update if exists, insert if not
+    const { data: existing } = await supabase
+      .from('reports')
+      .select('id')
+      .eq('type', type)
+      .eq('date', date)
+      .limit(1)
 
-    if (insertError) throw insertError
+    if (existing && existing.length > 0) {
+      const { error: updateError } = await supabase
+        .from('reports')
+        .update({ content, source: 'claude' })
+        .eq('id', existing[0].id)
+
+      if (updateError) throw updateError
+    } else {
+      const { error: insertError } = await supabase.from('reports').insert({
+        type,
+        content,
+        date,
+        source: 'claude',
+      })
+
+      if (insertError) throw insertError
+    }
 
     return NextResponse.json({
       success: true,
@@ -48,7 +65,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Content generation error:', error)
     return NextResponse.json(
-      { error: 'Content generation failed' },
+      { error: `Content generation failed: ${error instanceof Error ? error.message : 'unknown'}` },
       { status: 500 }
     )
   }
