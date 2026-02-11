@@ -138,5 +138,13 @@ for t in "${TYPES[@]}"; do
   echo ""
 done
 
+# --- Backup subscribers ---
+BACKUP_SCRIPT="${SCRIPT_DIR}/backup-subscribers.sh"
+if [ -x "$BACKUP_SCRIPT" ]; then
+  echo "--- Running subscriber backup ---"
+  "$BACKUP_SCRIPT" || echo "WARNING: Backup failed (non-fatal)"
+  echo ""
+fi
+
 echo "=== Done (${#TYPES[@]} types, $FAILED failed) ==="
 exit $FAILED
