@@ -11,26 +11,26 @@ const DEFAULT_BRAND: BrandConfig = {
   accentColor: '#4B8BFF',
 }
 
-// Color tokens: dark hero + white content body
+// Color tokens
 const C = {
   // Hero (dark)
   heroBg: '#000C24',
   heroText: '#FFFFFF',
-  heroSub: '#6B7280',
+  heroSub: '#8896A6',
   // Content (light)
   pageBg: '#f4f4f5',
   contentBg: '#FFFFFF',
-  cardBg: '#f8fafc',
-  border: '#e2e8f0',
-  borderAccent: '#001B44',
+  cardBg: '#f7f8fa',
+  border: '#e8ecf0',
+  borderAccent: '#4B8BFF',
   // Typography
-  heading: '#0f172a',
-  body: '#475569',
-  secondary: '#64748b',
-  muted: '#94a3b8',
+  heading: '#111827',
+  body: '#374151',
+  secondary: '#6b7280',
+  muted: '#9ca3af',
   link: '#4B8BFF',
   // Footer
-  footerBg: '#f8fafc',
+  footerBg: '#f7f8fa',
 }
 
 const FONT =
@@ -40,6 +40,10 @@ export function markdownToHtml(text: string): string {
   if (!text) return text
 
   let html = text
+
+  // Strip the first line if it's a title that duplicates the hero
+  // Matches patterns like: 🪙 Into Crypto | 2026-02-11 or ⚡ Minor News 每日... | 2026-02-11
+  html = html.replace(/^.+\|\s*\d{4}-\d{2}-\d{2}\s*\n+/, '')
 
   html = html.replace(/&/g, '&amp;')
 
@@ -58,69 +62,75 @@ export function markdownToHtml(text: string): string {
   // Links: [text](url)
   html = html.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
-    `<a href="$2" style="color: ${C.link}; text-decoration: none;">$1</a>`
+    `<a href="$2" style="color: ${C.link}; text-decoration: none; border-bottom: 1px solid rgba(75,139,255,0.3);">$1</a>`
   )
 
-  // Source links: 🔗 followed by URL (before section header regex)
+  // Source links: 🔗 followed by URL
   html = html.replace(
     /^🔗\s*(https?:\/\/\S+)$/gm,
-    `<div style="margin: 12px 0;"><a href="$1" style="color: ${C.muted}; text-decoration: none; font-size: 12px;">🔗 Source</a></div>`
+    `<div style="margin: 8px 0 4px;"><a href="$1" style="color: ${C.muted}; text-decoration: none; font-size: 13px;">🔗 Source</a></div>`
   )
 
-  // Metadata lines: 📍 at start of line
+  // Metadata pills: 📍 at start of line
   html = html.replace(
     /^📍\s*(.+)$/gm,
-    `<div style="margin: 8px 0;"><span style="display: inline-block; padding: 5px 12px; background: ${C.cardBg}; border: 1px solid ${C.border}; border-radius: 6px; font-size: 12px; color: ${C.secondary}; line-height: 1.4;">📍 $1</span></div>`
+    `<div style="margin: 6px 0 10px;"><span style="font-size: 12px; color: ${C.secondary}; line-height: 1.5;">📍 $1</span></div>`
   )
 
-  // Analysis lines: 💡 at start of line
+  // Analysis box: 💡 at start of line
   html = html.replace(
     /^💡\s*(.+)$/gm,
-    `<div style="margin: 16px 0; padding: 14px 18px; background: ${C.cardBg}; border-left: 3px solid ${C.borderAccent}; border-radius: 0 8px 8px 0;"><span style="font-size: 14px;">💡</span> <span style="color: ${C.body}; font-size: 14px; line-height: 1.7;">$1</span></div>`
+    `<div style="margin: 12px 0; padding: 12px 16px; background: ${C.cardBg}; border-left: 3px solid ${C.borderAccent}; border-radius: 0 6px 6px 0; font-size: 14px; color: ${C.body}; line-height: 1.7;">$1</div>`
   )
 
-  // Label lines: 值得思考 / Worth thinking about / 核心主题
+  // Remove label lines: 值得思考 / Worth thinking about / 核心主题 — strip entirely
   html = html.replace(
     /^(Worth thinking about|值得思考|核心主题)[：:]\s*$/gm,
-    `<div style="margin-top: 24px; margin-bottom: 10px; font-size: 11px; font-weight: 600; color: ${C.secondary}; text-transform: uppercase; letter-spacing: 2px;">$1</div>`
+    ''
   )
 
-  // Section headers: emoji (or keycap digit) at start of line followed by text
+  // Keycap digit section headers: 1️⃣ 2️⃣ 3️⃣ — article titles (no border)
   html = html.replace(
-    /^(\p{Emoji_Presentation}|\p{Extended_Pictographic}|\d️⃣)\s*(.+)$/gmu,
-    `<div style="margin-top: 36px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid ${C.border};"><span style="font-size: 26px; vertical-align: middle;">$1</span> <span style="font-size: 19px; font-weight: 700; color: ${C.heading}; letter-spacing: -0.3px; vertical-align: middle;">$2</span></div>`
+    /^(\d️⃣)\s*(.+)$/gmu,
+    `<div style="margin-top: 8px; margin-bottom: 12px;"><span style="font-size: 22px; vertical-align: middle;">$1</span> <span style="font-size: 18px; font-weight: 700; color: ${C.heading}; vertical-align: middle; line-height: 1.3;">$2</span></div>`
   )
 
-  // Horizontal rules
+  // Other emoji section headers (📊 📡 etc.) — secondary headers
+  html = html.replace(
+    /^(\p{Emoji_Presentation}|\p{Extended_Pictographic})\s*(.+)$/gmu,
+    `<div style="margin-top: 4px; margin-bottom: 10px;"><span style="font-size: 16px; vertical-align: middle;">$1</span> <span style="font-size: 15px; font-weight: 600; color: ${C.secondary}; vertical-align: middle;">$2</span></div>`
+  )
+
+  // Horizontal rules: ───
   html = html.replace(
     /─{3,}/g,
-    `<div style="height: 1px; background: ${C.border}; margin: 28px 0;"></div>`
+    `<div style="height: 1px; background: ${C.border}; margin: 24px 0;"></div>`
   )
 
   // Bullet points: • or - at start of line
   html = html.replace(
     /^[•\-]\s+(.+)$/gm,
-    `<div style="margin: 6px 0; padding-left: 20px; position: relative; color: ${C.body}; font-size: 14px; line-height: 1.7;"><span style="position: absolute; left: 4px; color: ${C.link};">•</span>$1</div>`
+    `<div style="margin: 5px 0; padding-left: 18px; position: relative; color: ${C.body}; font-size: 14px; line-height: 1.7;"><span style="position: absolute; left: 2px; color: ${C.muted};">•</span>$1</div>`
   )
 
   // Numbered list items
   html = html.replace(
     /^(\d+)\.\s+(.+)$/gm,
-    `<div style="margin: 10px 0; padding-left: 24px; position: relative; color: ${C.body}; font-size: 14px; line-height: 1.7;"><span style="position: absolute; left: 0; color: ${C.link}; font-weight: 600; font-size: 13px;">$1.</span>$2</div>`
+    `<div style="margin: 8px 0; padding-left: 22px; position: relative; color: ${C.body}; font-size: 14px; line-height: 1.7;"><span style="position: absolute; left: 0; color: ${C.link}; font-weight: 600; font-size: 13px;">$1.</span>$2</div>`
   )
 
   // Clean up newlines adjacent to block elements (prevents spurious <br>)
-  html = html.replace(/<\/div>\n/g, '</div>')
-  html = html.replace(/\n<div/g, '<div')
+  html = html.replace(/<\/div>\n+/g, '</div>')
+  html = html.replace(/\n+<div/g, '<div')
 
   // Paragraphs
   html = html.replace(
     /\n\n/g,
-    `</p><p style="margin: 14px 0; line-height: 1.8; color: ${C.body}; font-size: 15px;">`
+    `</p><p style="margin: 12px 0; line-height: 1.8; color: ${C.body}; font-size: 15px;">`
   )
   html = html.replace(/\n/g, '<br>')
 
-  return `<p style="margin: 14px 0; line-height: 1.8; color: ${C.body}; font-size: 15px;">${html}</p>`
+  return `<p style="margin: 12px 0; line-height: 1.8; color: ${C.body}; font-size: 15px;">${html}</p>`
 }
 
 export function buildEmailHtml(options: {
@@ -135,10 +145,6 @@ export function buildEmailHtml(options: {
   const formatted = markdownToHtml(options.content)
   const accent = brand.accentColor || C.link
 
-  const logoHtml = brand.brandLogoUrl
-    ? `<img src="${brand.brandLogoUrl}" alt="${brand.brandName}" height="36" style="display: inline-block; border: 0;" />`
-    : `<span style="font-size: 20px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.5px; font-family: ${FONT};">Starboard</span><span style="font-size: 20px; font-weight: 700; color: #6B7280; font-family: ${FONT};"> Analytics</span>`
-
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -152,41 +158,38 @@ export function buildEmailHtml(options: {
   <div style="max-width: 640px; margin: 0 auto;">
 
     <!-- Hero -->
-    <div style="background: ${C.heroBg}; padding: 48px 32px 44px; text-align: center;">
+    <div style="background: ${C.heroBg}; padding: 40px 32px 36px; text-align: center;">
       <!-- Logo -->
-      <div style="margin-bottom: 28px;">
+      <div style="margin-bottom: 24px;">
         ${brand.brandLogoUrl
-          ? `<img src="${brand.brandLogoUrl}" alt="${brand.brandName}" height="52" style="display: inline-block; border: 0;" />`
-          : `<span style="font-size: 28px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.5px; font-family: ${FONT};">Starboard</span><span style="font-size: 28px; font-weight: 700; color: #6B7280; font-family: ${FONT};"> Analytics</span>`
+          ? `<img src="${brand.brandLogoUrl}" alt="${brand.brandName}" width="200" height="60" style="display: inline-block; border: 0; max-width: 200px; height: auto; color: ${C.heroSub}; font-size: 14px; font-family: ${FONT};" />`
+          : `<span style="font-size: 22px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.5px; font-family: ${FONT};">Starboard</span><span style="font-size: 22px; font-weight: 400; color: ${C.heroSub}; font-family: ${FONT};"> Analytics</span>`
         }
       </div>
       <!-- Title -->
-      <h1 style="margin: 0; color: ${C.heroText}; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; font-family: ${FONT};">
+      <h1 style="margin: 0; color: ${C.heroText}; font-size: 26px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; font-family: ${FONT};">
         ${options.emoji} ${options.title}
       </h1>
       <!-- Date -->
-      <p style="margin: 12px 0 0 0; color: ${C.heroSub}; font-size: 13px; letter-spacing: 2px; font-weight: 400;">
+      <p style="margin: 10px 0 0 0; color: ${C.heroSub}; font-size: 13px; letter-spacing: 1.5px; font-weight: 400;">
         ${options.date}
       </p>
       <!-- Accent line -->
-      <div style="margin-top: 36px; height: 2px; background: linear-gradient(to right, ${C.heroBg}, ${accent}, ${C.heroBg});"></div>
+      <div style="margin-top: 32px; height: 2px; background: linear-gradient(to right, transparent, ${accent}, transparent);"></div>
     </div>
 
     <!-- Content -->
-    <div style="background: ${C.contentBg}; padding: 12px 36px 48px;">
+    <div style="background: ${C.contentBg}; padding: 28px 36px 40px;">
       ${formatted}
     </div>
 
     <!-- Footer -->
-    <div style="background: ${C.footerBg}; padding: 28px 32px; text-align: center; border-top: 1px solid ${C.border};">
-      ${brand.customFooter ? `<div style="margin-bottom: 16px; color: ${C.secondary}; font-size: 13px;">${brand.customFooter}</div>` : ''}
-      <p style="margin: 0 0 4px 0; color: ${C.muted}; font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">
-        POWERED BY
+    <div style="background: ${C.footerBg}; padding: 24px 32px; text-align: center; border-top: 1px solid ${C.border};">
+      ${brand.customFooter ? `<div style="margin-bottom: 14px; color: ${C.secondary}; font-size: 13px;">${brand.customFooter}</div>` : ''}
+      <p style="margin: 0 0 16px 0;">
+        <span style="color: ${C.muted}; font-size: 12px;">${brand.brandName}</span>
       </p>
-      <p style="margin: 0 0 20px 0;">
-        <span style="color: ${C.secondary}; font-size: 13px; font-weight: 600; letter-spacing: -0.2px;">${brand.brandName}</span>
-      </p>
-      <a href="${options.unsubscribeUrl}" style="display: inline-block; padding: 7px 18px; color: ${C.muted}; text-decoration: none; border-radius: 6px; font-size: 12px; border: 1px solid ${C.border};">
+      <a href="${options.unsubscribeUrl}" style="color: ${C.muted}; text-decoration: none; font-size: 12px;">
         Unsubscribe
       </a>
     </div>
