@@ -5,6 +5,15 @@ import Image from 'next/image'
 
 const FEEDS = [
   {
+    id: 'minor_news',
+    name: 'Minor News',
+    description: 'Daily crypto & energy infrastructure news digest',
+    schedule: 'Daily at 08:00 GMT',
+    emoji: '⚡',
+    tags: ['Crypto', 'Energy', 'English'],
+    color: 'amber',
+  },
+  {
     id: 'into_crypto_en',
     name: 'Into Crypto (EN)',
     description: 'Crypto education for beginners, zero jargon',
