@@ -39,9 +39,9 @@ export function markdownToHtml(text: string): string {
     '<a href="$2" style="color: #6366f1; text-decoration: none;">$1</a>'
   )
 
-  // Section headers with emoji (match common newsletter emojis)
+  // Section headers: emoji (or keycap digit) at start of line followed by text
   html = html.replace(
-    /^(🐦|📖|🤔|📰|⚡|🪙|🔥|💡|🌍|📊|🎯|📈|📉|🏗️|⛏️|🔋|💰|🧠|🗞️)\s*(.+)$/gm,
+    /^(\p{Emoji_Presentation}|\p{Extended_Pictographic}|\d️⃣)\s*(.+)$/gmu,
     '<div style="margin-top: 32px;"><span style="font-size: 20px;">$1</span> <span style="font-size: 18px; font-weight: 600; color: #0f172a;">$2</span></div>'
   )
 
@@ -49,6 +49,12 @@ export function markdownToHtml(text: string): string {
   html = html.replace(
     /─{3,}/g,
     '<div style="height: 1px; background: linear-gradient(to right, #e2e8f0, #cbd5e1, #e2e8f0); margin: 24px 0;"></div>'
+  )
+
+  // Bullet points: • or - at start of line
+  html = html.replace(
+    /^[•\-]\s+(.+)$/gm,
+    '<div style="margin: 8px 0; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #6366f1;">•</span> $1</div>'
   )
 
   // Numbered list items

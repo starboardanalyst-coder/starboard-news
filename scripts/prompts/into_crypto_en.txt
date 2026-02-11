@@ -5,66 +5,73 @@ Goal: Explain 3 trending crypto news stories in the simplest language, explain e
 
 ## STRICT OUTPUT FORMAT
 
-### HEADER:
+Output line-by-line following this exact template. Every line's format must be strictly followed.
 
+```
 🪙 Into Crypto | {{DATE}}
 
-One sentence summarizing today's overall crypto market state (price, sentiment, key event).
+One sentence summarizing today's overall crypto market state.
 
 ───
 
-### THREE MAIN STORIES (use 1️⃣ 2️⃣ 3️⃣):
+1️⃣ Headline goes here
 
-1️⃣ [headline]
+First paragraph: 2-3 sentences objectively describing what happened. Must include specific numbers (amounts, percentages, dates). No paragraph labels.
 
-[2-3 sentences objectively describing what happened. Include specific numbers.]
+Second paragraph: Explain every term in this story that a beginner wouldn't understand. Readers may not know what ETFs, staking, Layer 2, stablecoins, mining difficulty, or gas fees are. Define each on first use. Use analogies only when they genuinely help — don't force them. Don't re-explain concepts already covered in another story.
 
-[Explanation paragraph: explain every term a beginner wouldn't understand. Readers may not know what an ETF is, what staking means, what Layer 2 is, what a stablecoin does. Explain each term when it first appears. Use analogies only when they genuinely help — don't force them. Make sure the same concept is NOT re-explained across the three stories. Lean heavily into explaining crypto concepts — don't hold back.]
-
-[Analysis paragraph: what does this mean? What's the impact on the industry or on regular people?]
+Third paragraph: What does this mean? What's the impact on the industry or on regular people?
 
 Worth thinking about:
-• [A first-principles question that pushes the reader to reason independently — not "what do you think?"]
-• [Another thought-provoking question]
+• First question (first-principles, pushes independent reasoning)
+• Second question (thought-provoking, not "what do you think?")
 
-🔗 [source URL]
-
-───
-
-2️⃣ [headline]
-
-[same format as above]
+🔗 https://source-url
 
 ───
 
-3️⃣ [headline]
+2️⃣ Headline goes here
 
-[same format as above]
+(Same structure: facts → concept explanations → analysis → worth thinking about → link)
 
 ───
 
-### QUICK HITS (5-10 items, more crypto-native):
+3️⃣ Headline goes here
+
+(Same structure)
+
+───
 
 📡 Quick Hits
 
-• [Protocol/Project] — [one-line description] [🔗](url)
-• [Protocol/Project] — [one-line description] [🔗](url)
-...repeat 5-10 times
+• Protocol/Project — one-line description [🔗](https://url)
+• Protocol/Project — one-line description [🔗](https://url)
+• Protocol/Project — one-line description [🔗](https://url)
+• Protocol/Project — one-line description [🔗](https://url)
+• Protocol/Project — one-line description [🔗](https://url)
+```
+
+## HARD FORMATTING RULES (the email renderer depends on these — breaking them causes layout bugs)
+
+1. Separate paragraphs with one blank line (two newlines). The email template uses blank lines to create paragraph breaks.
+2. Do NOT manually break lines within a paragraph — let text flow continuously. The email template converts single newlines to <br>, causing unwanted line breaks.
+3. Separate sections with ─── (three em dashes), with one blank line before and after ───.
+4. Keycap emojis 1️⃣ 2️⃣ 3️⃣ MUST be at the start of a line, followed by a space and the headline text. The email template renders these as large section headers.
+5. 📡 MUST be at the start of a line.
+6. Bullet points use • (not -), one per line. The email template renders • as indented list items.
+7. **Bold** uses double asterisks. The email template renders as bold text.
+8. Links use [text](url) format. The email template renders as clickable links.
+9. Standalone 🔗 links: just write 🔗 https://url — no markdown format needed.
+10. Do NOT output markdown code fences (```), do NOT output any non-content text.
+11. "Worth thinking about:" must be on its own line, followed by questions each starting with • on their own line.
 
 ## CONTENT RULES
 
-1. Do NOT add bold headers like "What happened:" or "What this means:" before paragraphs — just write the content directly
-2. The 3 main stories MUST cover different topics
-3. Explain key concepts generously — readers may not know what ETFs, staking, Layer 2, stablecoins, mining difficulty, or gas fees are. Explain each term on first use. But do NOT re-explain the same concept across stories
-4. Use analogies only when they genuinely clarify. Don't force analogies where none are needed
-5. Do NOT pad with filler words. No "shaking the market", "sparking debate", "worth watching"
-6. Do NOT be narrative. No "In today's ever-changing landscape..." openings
-7. Numbers must be specific: don't say "surged significantly", say "rose 23% to $95,000"
-8. "Worth thinking about" questions must be first-principles, thought-provoking. Each question gets its own bullet point (•)
-9. Every main story MUST have a 🔗 source link at the bottom
-10. Quick Hits section should be more crypto-native / degen: protocol updates, on-chain data, DeFi activity, NFT events, DAO governance, etc.
-11. Quick Hits links use inline markdown format [🔗](url)
-12. Do NOT include "Word of the Day" or any closing summary
-13. Total length: 1000-1500 words
-14. Use ─── (three em dashes) as the ONLY separator between sections
-15. Do NOT output markdown code fences or ```
+1. The 3 main stories MUST cover different topics
+2. Topic priority: regulation/policy > major market events > tech upgrades > industry trends
+3. Explain key concepts generously — ETFs, staking, Layer 2, stablecoins, mining difficulty, gas fees, etc. Define each on first use. Don't re-explain across stories
+4. Do NOT pad with filler. No "shaking the market", "sparking debate"
+5. Do NOT use narrative openings. No "In today's ever-changing landscape..."
+6. Numbers must be specific: "rose 23% to $95,000", not "surged significantly"
+7. Quick Hits: 5-10 items, more crypto-native — protocol updates, on-chain data, DeFi activity, NFT, DAO governance
+8. Total length: 1000-1500 words
