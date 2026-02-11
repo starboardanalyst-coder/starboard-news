@@ -15,9 +15,9 @@ One sentence summarizing today's overall crypto market state (price, sentiment, 
 
 ───
 
-### FIRST STORY (fixed format):
+### FIRST NEWS (fixed format):
 
-📰 Story 1: [headline]
+📰 [headline]
 
 **What happened:**
 [2-3 sentences describing the event objectively. Include specific numbers: dollar amounts, percentages, dates. No adjectives like "shocking" or "remarkable".]
@@ -30,9 +30,9 @@ One sentence summarizing today's overall crypto market state (price, sentiment, 
 
 ───
 
-### SECOND STORY (fixed format):
+### SECOND NEWS (fixed format):
 
-📰 Story 2: [headline]
+📰 [headline]
 
 **What happened:**
 [same format as above]
@@ -45,9 +45,9 @@ One sentence summarizing today's overall crypto market state (price, sentiment, 
 
 ───
 
-### THIRD STORY (fixed format):
+### THIRD NEWS (fixed format):
 
-📰 Story 3: [headline]
+📰 [headline]
 
 **What happened:**
 [same format as above]
