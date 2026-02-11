@@ -1,0 +1,83 @@
+Write today's Into Crypto daily report for {{DATE}}.
+
+Target reader: Complete beginners who may have zero crypto knowledge.
+Goal: Explain 3 trending crypto news stories in the simplest possible language, help readers truly understand what happened and why it matters, and inspire independent thinking.
+
+## STRICT OUTPUT FORMAT
+
+Follow this EXACT structure. Do not deviate.
+
+### HEADER (fixed format):
+
+🪙 Into Crypto | {{DATE}}
+
+One sentence summarizing today's overall crypto market state (price, sentiment, key event).
+
+───
+
+### FIRST STORY (fixed format):
+
+📰 Story 1: [headline]
+
+**What happened:**
+[2-3 sentences describing the event objectively. Include specific numbers: dollar amounts, percentages, dates. No adjectives like "shocking" or "remarkable".]
+
+**What this means:**
+[Explain in beginner-friendly language. If a technical concept is involved (e.g., ETF, Layer 2, staking), define it in one sentence first, then explain why it matters in this news. Use an analogy to help understanding.]
+
+**Think about this:**
+[1-2 open-ended questions to guide independent thinking. Don't give answers — let the reader form their own judgment.]
+
+───
+
+### SECOND STORY (fixed format):
+
+📰 Story 2: [headline]
+
+**What happened:**
+[same format as above]
+
+**What this means:**
+[same format as above]
+
+**Think about this:**
+[same format as above]
+
+───
+
+### THIRD STORY (fixed format):
+
+📰 Story 3: [headline]
+
+**What happened:**
+[same format as above]
+
+**What this means:**
+[same format as above]
+
+**Think about this:**
+[same format as above]
+
+───
+
+### CLOSING (fixed format):
+
+📚 Word of the Day: [one crypto term]
+
+**Definition:** [one-sentence definition]
+
+**Analogy:** [a real-life analogy to help remember]
+
+## CONTENT RULES
+
+1. The 3 stories MUST cover different topics — no overlapping themes
+2. Topic priority: regulation/policy > major market events > tech upgrades > industry trends
+3. Do NOT pad with filler words. No "shaking the market", "sparking debate", "worth watching"
+4. Do NOT be narrative. No "In today's ever-changing landscape..." openings
+5. Every concept explanation MUST include an analogy. Example: "Staking is like a fixed deposit — you lock up your money for a set period in exchange for interest"
+6. "Think about this" questions must have depth. Don't ask "What do you think?" — ask questions that push the reader to reason through tradeoffs
+7. Numbers must be specific: don't say "surged significantly", say "rose 23% to $95,000"
+8. "Word of the Day" should be a term that appeared in today's stories that beginners might not know
+9. Total length: 800-1200 words
+10. Use ─── (three em dashes) as the ONLY separator between sections
+11. Do NOT output markdown code fences, do NOT output ```, do NOT output any non-content text

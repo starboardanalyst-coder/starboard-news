@@ -5,14 +5,14 @@ Public API for subscribing to Starboard newsletters from external websites.
 ## Base URL
 
 ```
-https://news.starboard.to/api/subscribe
+https://news.starboard.to
 ```
 
 ---
 
-## Endpoints
+## Public Endpoints
 
-### GET /api/subscribe
+### GET /api/newsletters
 
 Returns available newsletters.
 
@@ -89,13 +89,107 @@ Content-Type: application/json
 
 ---
 
+### GET /api/content/today
+
+Get today's newsletter content for a specific feed.
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `feed` | string | Yes | Newsletter ID (`minor_news`, `into_crypto_cn`, `into_crypto_en`) |
+
+**Example:**
+```
+GET /api/content/today?feed=minor_news
+```
+
+**Success Response (200):**
+```json
+{
+  "date": "2026-02-11",
+  "title": "Minor News",
+  "emoji": "⚡",
+  "content": "Markdown content...",
+  "html": "Rendered HTML...",
+  "generated_at": "2026-02-11T07:00:00Z"
+}
+```
+
+**Error Responses:**
+
+| Status | Response | Cause |
+|--------|----------|-------|
+| 400 | `{ "error": "Missing or invalid feed..." }` | Invalid or missing feed parameter |
+| 404 | `{ "error": "No content available" }` | No content for today |
+
+---
+
+### GET /api/unsubscribe
+
+Unsubscribe via token (used in email unsubscribe links).
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `token` | string | Yes | Unsubscribe token from email |
+
+---
+
+## Private Endpoints
+
+The following endpoints require authentication via `Authorization: Bearer <CRON_SECRET>` header.
+
+### POST /api/content/ingest
+
+Write content directly to the database (bypasses content generation).
+
+**Request Body:**
+```json
+{
+  "type": "daily",
+  "date": "2026-02-11",
+  "content": "Markdown newsletter content..."
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `type` | string | Yes | Report type: `daily`, `into_crypto_cn`, `into_crypto_en` |
+| `date` | string | Yes | Date in `YYYY-MM-DD` format |
+| `content` | string | Yes | Newsletter content in markdown |
+
+---
+
+### POST /api/content/generate
+
+Generate content via Claude API (requires Anthropic API credits on server).
+
+**Request Body:**
+```json
+{
+  "type": "daily",
+  "date": "2026-02-11",
+  "sources": "News source material..."
+}
+```
+
+---
+
+### GET /api/cron/send
+
+Trigger batch email sending for all feeds. Checks for today's reports and sends to all active subscribers.
+
+---
+
 ## Code Examples
 
 ### JavaScript (Fetch)
 
 ```javascript
 // 1. Get available newsletters
-const newslettersRes = await fetch('https://news.starboard.to/api/subscribe');
+const newslettersRes = await fetch('https://news.starboard.to/api/newsletters');
 const { newsletters } = await newslettersRes.json();
 console.log(newsletters);
 
@@ -132,7 +226,7 @@ function SubscribeForm() {
   const [status, setStatus] = useState(null);
 
   useEffect(() => {
-    fetch('https://news.starboard.to/api/subscribe')
+    fetch('https://news.starboard.to/api/newsletters')
       .then(res => res.json())
       .then(data => setNewsletters(data.newsletters));
   }, []);
@@ -152,8 +246,8 @@ function SubscribeForm() {
   };
 
   const toggleFeed = (id) => {
-    setSelected(prev => 
-      prev.includes(id) 
+    setSelected(prev =>
+      prev.includes(id)
         ? prev.filter(f => f !== id)
         : [...prev, id]
     );
@@ -186,9 +280,9 @@ function SubscribeForm() {
         Subscribe
       </button>
 
-      {status === 'success' && <p>✅ Subscribed! Check your inbox.</p>}
+      {status === 'success' && <p>Subscribed! Check your inbox.</p>}
       {status && status !== 'success' && status !== 'loading' && (
-        <p>❌ {status}</p>
+        <p>{status}</p>
       )}
     </form>
   );
@@ -199,22 +293,25 @@ function SubscribeForm() {
 
 ```bash
 # Get newsletters
-curl https://news.starboard.to/api/subscribe
+curl https://news.starboard.to/api/newsletters
 
 # Subscribe
 curl -X POST https://news.starboard.to/api/subscribe \
   -H "Content-Type: application/json" \
   -d '{"email":"user@example.com","feeds":["minor_news"]}'
+
+# Get today's content
+curl "https://news.starboard.to/api/content/today?feed=minor_news"
 ```
 
 ---
 
 ## Notes
 
-- **CORS**: Enabled for all origins (`Access-Control-Allow-Origin: *`)
+- **CORS**: Enabled for all origins (`Access-Control-Allow-Origin: *`) on public endpoints
 - **Welcome Email**: New subscribers automatically receive the latest issue
 - **Idempotent**: Re-subscribing merges new feeds with existing subscriptions
-- **No Auth**: Public API, no authentication required
+- **No Auth**: Public endpoints require no authentication
 
 ---
 
