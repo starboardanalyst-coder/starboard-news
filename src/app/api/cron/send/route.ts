@@ -3,6 +3,8 @@ import { VALID_FEED_IDS, getReportType } from '@/lib/newsletters'
 import { supabase } from '@/lib/supabase'
 import { sendBatchEmails } from '@/lib/email'
 
+export const maxDuration = 120
+
 export async function GET(request: NextRequest) {
   // Verify Vercel Cron secret
   const authHeader = request.headers.get('authorization')

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { generateContent, getSupportedReportTypes } from '@/lib/claude'
 
+export const maxDuration = 120
+
 export async function GET(request: NextRequest) {
   // Verify Vercel Cron secret
   const authHeader = request.headers.get('authorization')
