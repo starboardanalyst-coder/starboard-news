@@ -5,7 +5,6 @@ export interface Newsletter {
   emoji: string
   language: string
   reportType: string // maps to reports table 'type' column
-  gradient: string
   accentColor: string
 }
 
@@ -16,19 +15,17 @@ export const NEWSLETTERS: Newsletter[] = [
     description: 'Daily crypto & energy infrastructure news digest',
     emoji: '⚡',
     language: 'en',
-    reportType: 'daily',
-    gradient: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
-    accentColor: '#f59e0b',
+    reportType: 'minor_news',
+    accentColor: '#F59E0B', // amber — energy theme
   },
   {
     id: 'into_crypto_cn',
-    name: 'Into Crypto 中文版',
+    name: 'Into Crypto',
     description: '每日加密货币深度分析',
     emoji: '🪙',
     language: 'zh',
     reportType: 'into_crypto_cn',
-    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    accentColor: '#667eea',
+    accentColor: '#4B8BFF', // brand blue — crypto theme
   },
   {
     id: 'into_crypto_en',
@@ -37,8 +34,7 @@ export const NEWSLETTERS: Newsletter[] = [
     emoji: '🪙',
     language: 'en',
     reportType: 'into_crypto_en',
-    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    accentColor: '#667eea',
+    accentColor: '#4B8BFF', // brand blue — crypto theme
   },
 ]
 

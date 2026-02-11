@@ -3,7 +3,7 @@
 # Uses Claude Code CLI to generate content, then pushes via ingest API
 #
 # Usage: ./generate-newsletter.sh [type]
-#   type: daily | into_crypto_cn | into_crypto_en | all (default: all)
+#   type: minor_news | into_crypto_cn | into_crypto_en | all (default: all)
 #
 # Prompts are loaded from scripts/prompts/*.txt — edit those files to customize.
 # Secrets are loaded from scripts/.env (gitignored).
@@ -29,16 +29,8 @@ source "$ENV_FILE"
 
 TODAY=$(date +%Y-%m-%d)
 
-# Report type → feed ID mapping (for checking existing content)
-declare -A FEED_MAP=(
-  [daily]="minor_news"
-  [into_crypto_cn]="into_crypto_cn"
-  [into_crypto_en]="into_crypto_en"
-)
-
 generate_and_ingest() {
   local type="$1"
-  local feed_id="${FEED_MAP[$type]}"
   local prompt_file="${PROMPT_DIR}/${type}.txt"
   local system_file="${PROMPT_DIR}/system.txt"
 
@@ -49,9 +41,9 @@ generate_and_ingest() {
 
   echo "[$type] Generating content for $TODAY..."
 
-  # Check if content already exists (use feed ID, not report type)
+  # Check if content already exists
   local check
-  check=$(curl -s "${API_URL}/api/content/today?feed=${feed_id}")
+  check=$(curl -s "${API_URL}/api/content/today?feed=${type}")
   if echo "$check" | grep -q '"date"'; then
     echo "[$type] Content already exists for today, skipping."
     return 0
@@ -127,15 +119,15 @@ fi
 
 TYPES=()
 case "$TYPE" in
-  daily|into_crypto_cn|into_crypto_en)
+  minor_news|into_crypto_cn|into_crypto_en)
     TYPES=("$TYPE")
     ;;
   all)
-    TYPES=(daily into_crypto_cn into_crypto_en)
+    TYPES=(minor_news into_crypto_cn into_crypto_en)
     ;;
   *)
     echo "Unknown type: $TYPE"
-    echo "Usage: $0 [daily|into_crypto_cn|into_crypto_en|all]"
+    echo "Usage: $0 [minor_news|into_crypto_cn|into_crypto_en|all]"
     exit 1
     ;;
 esac

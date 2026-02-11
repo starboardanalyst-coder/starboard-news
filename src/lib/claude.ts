@@ -10,7 +10,7 @@ Include links where relevant using [text](url) markdown format.
 Use ─── (three em dashes) as section dividers.`
 
 const PROMPTS: Record<string, (date: string, sources: string) => string> = {
-  daily: (date, sources) => `Write today's Minor News daily digest for ${date}.
+  minor_news: (date, sources) => `Write today's Minor News daily digest for ${date}.
 
 Topic: Crypto & energy infrastructure news.
 
@@ -32,7 +32,7 @@ Format:
 Tone: Professional but accessible. No jargon without explanation.
 Length: 800-1200 words total.`,
 
-  into_crypto_cn: (date, sources) => `为 ${date} 撰写 Into Crypto 中文版日报。
+  into_crypto_cn: (date, sources) => `为 ${date} 撰写 Into Crypto 日报（中文）。
 
 主题：加密货币深度分析，零基础友好。
 

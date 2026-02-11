@@ -50,7 +50,6 @@ export async function sendNewsletter(
     content,
     unsubscribeUrl,
     brand: brand ?? {
-      gradient: newsletter.gradient,
       accentColor: newsletter.accentColor,
     },
   })
@@ -131,7 +130,6 @@ export async function sendBatchEmails(
       content,
       unsubscribeUrl,
       brand: {
-        gradient: newsletter.gradient,
         accentColor: newsletter.accentColor,
       },
     })

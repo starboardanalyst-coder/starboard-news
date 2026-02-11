@@ -1,0 +1,80 @@
+Write today's Minor News daily energy digest for {{DATE}}.
+
+Topic: Energy infrastructure, bitcoin mining, data centers, power markets, and grid policy.
+
+Use your latest knowledge. Find 8-12 significant news stories from the past 24 hours.
+
+## STRICT OUTPUT FORMAT
+
+Output line-by-line following this exact template. Every line's format must be strictly followed.
+
+```
+⚡ Minor News 每日能源快讯 | {{DATE}}
+📊 今日共[N]条重点新闻
+
+核心主题：
+• [emoji] [one-line theme summary]
+• [emoji] [one-line theme summary]
+• [emoji] [one-line theme summary]
+• [emoji] [one-line theme summary]
+
+───
+
+**[Bold headline in Chinese, one sentence]**
+
+📍 [country/region] | 🏢 [company names] | #[Tag1] #[Tag2] #[Tag3]
+
+[2-3 sentences: what happened, key facts and numbers. Be specific — include dollar amounts, percentages, MW/GW numbers, dates.]
+
+💡 [1-2 sentences: analysis and implications. Why does this matter? What trend does it signal?]
+
+🔗 https://source-url
+
+───
+
+**[Next headline]**
+
+(Same structure: headline → 📍 line → facts → 💡 analysis → 🔗 link)
+
+───
+
+(Repeat 8-12 times total)
+```
+
+## HARD FORMATTING RULES (the email renderer depends on these — breaking them causes layout bugs)
+
+1. Separate paragraphs with one blank line (two newlines). The email template uses blank lines to create paragraph breaks.
+2. Do NOT manually break lines within a paragraph — let text flow continuously. The email template converts single newlines to <br>, causing unwanted line breaks.
+3. Separate news items with ─── (three em dashes), with one blank line before and after ───.
+4. ⚡ and 📊 MUST be at the start of a line. The email template renders these as large section headers.
+5. 📍 MUST be at the start of a line. The email template renders this as a small gray metadata line.
+6. 💡 MUST be at the start of a line. The email template renders this as a styled analysis box with left border.
+7. 🔗 MUST be at the start of a line, followed by a space and a bare URL (https://...). The email template renders this as a clickable source link. Do NOT wrap in markdown format.
+8. Headlines use **double asterisks** for bold. The email template renders as bold text.
+9. Bullet points use • (not -), one per line. The email template renders • as indented list items.
+10. Do NOT output markdown code fences (```), do NOT output any non-content text.
+11. "核心主题：" must be on its own line, followed by bullet items each starting with • on their own line.
+
+## CONTENT RULES
+
+1. Each news item MUST have all 5 parts: **headline**, 📍 line, summary paragraph, 💡 analysis, 🔗 source link
+2. Headlines must be in Chinese, wrapped in **bold**
+3. Location line format is FIXED: 📍 ... | 🏢 ... | #...
+4. Summary: focus on facts and numbers. No fluff, no filler words.
+5. Analysis (💡): give actionable insight. Connect to broader trends. What should the reader take away?
+6. Source links: use real, plausible URLs from major energy/crypto/finance outlets (Bloomberg, Reuters, TheMinerMag, CoinTelegraph, etc.)
+7. Cover diverse topics: bitcoin mining economics, data center construction, power grid policy, natural gas/electricity markets, renewable energy, regulatory changes
+8. Core themes (核心主题) should use relevant emojis: 🔴 for negative/crisis, 💰 for finance, 🏗️ for construction, 🌀 for weather/grid, ⚡ for energy policy, 🔋 for storage, 🌍 for international
+9. Write 800-1500 words total
+
+## EXAMPLE NEWS ITEM:
+
+**比特币挖矿难度暴跌11%，创2021年中国禁令以来最大降幅**
+
+📍 美国/全球 | 🏢 Foundry USA, 各大矿企 | #BitcoinMining #PowerMarket #Grid
+
+冬季风暴Fern席卷美国34个州，导致矿工被迫削减电力使用以稳定电网。全网算力过去30天下降约20%，Foundry USA矿池一度损失60%算力。比特币价格从12.6万美元高点暴跌超45%至约6万美元，矿工收益指标hashprice跌破30美元/PH/s，接近盈亏平衡线。
+
+💡 挖矿难度下调11%将短期缓解矿工压力，但成本约8.7万美元/BTC而现货仅6.9万美元，意味着许多矿企正在亏损运营。预计更多矿企将转向AI数据中心业务。
+
+🔗 https://www.tradingview.com/news/cointelegraph:05e5eb020094b:0-bitcoin-difficulty-drops-by-over-11-sharpest-drop-since-2021-china-ban/
