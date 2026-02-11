@@ -1,13 +1,11 @@
 Write today's Into Crypto daily report for {{DATE}}.
 
-Target reader: Complete beginners who may have zero crypto knowledge.
-Goal: Explain 3 trending crypto news stories in the simplest possible language, help readers truly understand what happened and why it matters, and inspire independent thinking.
+Target reader: Complete beginners who know nothing about crypto or even finance in general.
+Goal: Explain 3 trending crypto news stories in the simplest language, explain every key concept, and inspire deep thinking.
 
 ## STRICT OUTPUT FORMAT
 
-Follow this EXACT structure. Do not deviate.
-
-### HEADER (fixed format):
+### HEADER:
 
 🪙 Into Crypto | {{DATE}}
 
@@ -15,69 +13,58 @@ One sentence summarizing today's overall crypto market state (price, sentiment, 
 
 ───
 
-### FIRST NEWS (fixed format):
+### THREE MAIN STORIES (use 1️⃣ 2️⃣ 3️⃣):
 
-📰 [headline]
+1️⃣ [headline]
 
-**What happened:**
-[2-3 sentences describing the event objectively. Include specific numbers: dollar amounts, percentages, dates. No adjectives like "shocking" or "remarkable".]
+[2-3 sentences objectively describing what happened. Include specific numbers.]
 
-**What this means:**
-[Explain in beginner-friendly language. If a technical concept is involved (e.g., ETF, Layer 2, staking), define it in one sentence first, then explain why it matters in this news. Use an analogy to help understanding.]
+[Explanation paragraph: explain every term a beginner wouldn't understand. Readers may not know what an ETF is, what staking means, what Layer 2 is, what a stablecoin does. Explain each term when it first appears. Use analogies only when they genuinely help — don't force them. Make sure the same concept is NOT re-explained across the three stories. Lean heavily into explaining crypto concepts — don't hold back.]
 
-**Think about this:**
-[1-2 open-ended questions to guide independent thinking. Don't give answers — let the reader form their own judgment.]
+[Analysis paragraph: what does this mean? What's the impact on the industry or on regular people?]
+
+Worth thinking about:
+• [A first-principles question that pushes the reader to reason independently — not "what do you think?"]
+• [Another thought-provoking question]
+
+🔗 [source URL]
 
 ───
 
-### SECOND NEWS (fixed format):
+2️⃣ [headline]
 
-📰 [headline]
-
-**What happened:**
-[same format as above]
-
-**What this means:**
-[same format as above]
-
-**Think about this:**
 [same format as above]
 
 ───
 
-### THIRD NEWS (fixed format):
+3️⃣ [headline]
 
-📰 [headline]
-
-**What happened:**
-[same format as above]
-
-**What this means:**
-[same format as above]
-
-**Think about this:**
 [same format as above]
 
 ───
 
-### CLOSING (fixed format):
+### QUICK HITS (5-10 items, more crypto-native):
 
-📚 Word of the Day: [one crypto term]
+📡 Quick Hits
 
-**Definition:** [one-sentence definition]
-
-**Analogy:** [a real-life analogy to help remember]
+• [Protocol/Project] — [one-line description] [🔗](url)
+• [Protocol/Project] — [one-line description] [🔗](url)
+...repeat 5-10 times
 
 ## CONTENT RULES
 
-1. The 3 stories MUST cover different topics — no overlapping themes
-2. Topic priority: regulation/policy > major market events > tech upgrades > industry trends
-3. Do NOT pad with filler words. No "shaking the market", "sparking debate", "worth watching"
-4. Do NOT be narrative. No "In today's ever-changing landscape..." openings
-5. Every concept explanation MUST include an analogy. Example: "Staking is like a fixed deposit — you lock up your money for a set period in exchange for interest"
-6. "Think about this" questions must have depth. Don't ask "What do you think?" — ask questions that push the reader to reason through tradeoffs
+1. Do NOT add bold headers like "What happened:" or "What this means:" before paragraphs — just write the content directly
+2. The 3 main stories MUST cover different topics
+3. Explain key concepts generously — readers may not know what ETFs, staking, Layer 2, stablecoins, mining difficulty, or gas fees are. Explain each term on first use. But do NOT re-explain the same concept across stories
+4. Use analogies only when they genuinely clarify. Don't force analogies where none are needed
+5. Do NOT pad with filler words. No "shaking the market", "sparking debate", "worth watching"
+6. Do NOT be narrative. No "In today's ever-changing landscape..." openings
 7. Numbers must be specific: don't say "surged significantly", say "rose 23% to $95,000"
-8. "Word of the Day" should be a term that appeared in today's stories that beginners might not know
-9. Total length: 800-1200 words
-10. Use ─── (three em dashes) as the ONLY separator between sections
-11. Do NOT output markdown code fences, do NOT output ```, do NOT output any non-content text
+8. "Worth thinking about" questions must be first-principles, thought-provoking. Each question gets its own bullet point (•)
+9. Every main story MUST have a 🔗 source link at the bottom
+10. Quick Hits section should be more crypto-native / degen: protocol updates, on-chain data, DeFi activity, NFT events, DAO governance, etc.
+11. Quick Hits links use inline markdown format [🔗](url)
+12. Do NOT include "Word of the Day" or any closing summary
+13. Total length: 1000-1500 words
+14. Use ─── (three em dashes) as the ONLY separator between sections
+15. Do NOT output markdown code fences or ```
