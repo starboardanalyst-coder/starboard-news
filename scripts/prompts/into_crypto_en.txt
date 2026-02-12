@@ -26,13 +26,11 @@ Worth thinking about:
 • First question (first-principles, pushes independent reasoning)
 • Second question (thought-provoking, not "what do you think?")
 
-🔗 https://source-url
-
 ───
 
 2️⃣ Headline goes here
 
-(Same structure: facts → concept explanations → analysis → worth thinking about → link)
+(Same structure: facts → concept explanations → analysis → worth thinking about)
 
 ───
 
@@ -44,11 +42,11 @@ Worth thinking about:
 
 📡 Quick Hits
 
-• Protocol/Project — one-line description [🔗](https://url)
-• Protocol/Project — one-line description [🔗](https://url)
-• Protocol/Project — one-line description [🔗](https://url)
-• Protocol/Project — one-line description [🔗](https://url)
-• Protocol/Project — one-line description [🔗](https://url)
+• Protocol/Project — one-line description
+• Protocol/Project — one-line description
+• Protocol/Project — one-line description
+• Protocol/Project — one-line description
+• Protocol/Project — one-line description
 ```
 
 ## HARD FORMATTING RULES (the email renderer depends on these — breaking them causes layout bugs)
@@ -60,10 +58,9 @@ Worth thinking about:
 5. 📡 MUST be at the start of a line.
 6. Bullet points use • (not -), one per line. The email template renders • as indented list items.
 7. **Bold** uses double asterisks. The email template renders as bold text.
-8. Links use [text](url) format. The email template renders as clickable links.
-9. Standalone 🔗 links: just write 🔗 https://url — no markdown format needed.
-10. Do NOT output markdown code fences (```), do NOT output any non-content text.
-11. "Worth thinking about:" must be on its own line, followed by questions each starting with • on their own line.
+8. Do NOT include any external links or source URLs. No 🔗, no [text](url), no standalone URLs. The newsletter should be self-contained.
+9. Do NOT output markdown code fences (```), do NOT output any non-content text.
+10. "Worth thinking about:" must be on its own line, followed by questions each starting with • on their own line.
 
 ## CONTENT RULES
 

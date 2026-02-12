@@ -69,7 +69,7 @@ export default function Home() {
       
       if (res.ok) {
         setStatus('success')
-        setMessage('Subscribed! You\'ll receive curated news in your inbox.')
+        setMessage('Today\'s news has been sent to your email, please check your inbox.')
         setEmail('')
         setSelectedFeeds([])
       } else {
@@ -222,6 +222,7 @@ export default function Home() {
             </a>
           </p>
           <p className="mt-2">Unsubscribe anytime · No spam, ever</p>
+          <p className="mt-2 text-gray-400">Emails may end up in your spam folder — please check there if you don&apos;t see them in your inbox.</p>
         </div>
       </div>
     </main>
